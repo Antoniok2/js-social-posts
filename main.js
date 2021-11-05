@@ -29,6 +29,7 @@ const post = [
         "FotoProfilo": "https://i.picsum.photos/id/51/300/300.jpg?hmac=DE65R3LIyroy_bfw9ECgckaCT6Y1ebB6Rc2PcqF--mM",
         "Data": "5 mesi fa",
         "TextPost": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto.",
+        "Image": "https://unsplash.it/600/300?image=171",
         "Like": "140"
     },
     {
@@ -41,78 +42,85 @@ const post = [
     }
 ];
 
-for (let i = 0; i < post.length; i++) {
+    // QUI TROVO LA VECCHIA MANIERA DI RICHIAMARE GLI OGGETTI DANDO UNA VARIABILE
+        // let nameAutore = "";
+        // let photoProfile = "";
+        // let dataPost = "";
+        // let TextPost = "";
+        // let imagePost = "";
+        // let likePost = "";
+    // E ASSEGNADO ALLA VARIABILE CREATA OGNI SINGOLO OGGETTO
+        // for (let key in post){
+        //     nameAutore = post[i].Autore;
+        //     photoProfile = post[i].FotoProfilo;
+        //     dataPost = post[i].Data;
+        //     TextPost = post[i].TextPost;
+        //     imagePost = post[i].Image;
+        //     likePost = post[i].Like;
+        // }
+    
 
-// QUI TROVO LA VECCHIA MANIERA DI RICHIAMARE GLI OGGETTI DANDO UNA VARIABILE
-    // let nameAutore = "";
-    // let photoProfile = "";
-    // let dataPost = "";
-    // let TextPost = "";
-    // let imagePost = "";
-    // let likePost = "";
-// E ASSEGNADO ALLA VARIABILE CREATA OGNI SINGOLO OGGETTO
-    // for (let key in post){
-    //     nameAutore = post[i].Autore;
-    //     photoProfile = post[i].FotoProfilo;
-    //     dataPost = post[i].Data;
-    //     TextPost = post[i].TextPost;
-    //     imagePost = post[i].Image;
-    //     likePost = post[i].Like;
-    // }
-
-// IN QUESTO MODO RICHIAMO GLI OGGETTI CON UNA SINGOLA VARIABILE IL CHE RENDE TUTTO PIù VELOCE
-    const {Autore, FotoProfilo, Data, TextPost, Image, Like} = post[i];
-
-// QUI ALLA VARIABILE CREATA SOPRA DICO COSA DEVE INSERIRE ALL'INTERNO PER POI VISUALIZZARLA NELL'HTML 
-    postTag += `
-    <div class="post">
-            <div class="post__header">
-                <div class="post-meta">                    
-                    <div class="post-meta__icon">
-                        <img class="profile-pic" src="${FotoProfilo}" alt="${Autore}">                    
+function stampa() {
+    postTag = "";
+    for (let i = 0; i < post.length; i++) {
+    // IN QUESTO MODO RICHIAMO GLI OGGETTI CON UNA SINGOLA VARIABILE IL CHE RENDE TUTTO PIù VELOCE
+        const {Autore, FotoProfilo, Data, TextPost, Image, Like} = post[i];
+    
+    // QUI ALLA VARIABILE CREATA SOPRA DICO COSA DEVE INSERIRE ALL'INTERNO PER POI VISUALIZZARLA NELL'HTML 
+        postTag += `
+        <div class="post">
+                <div class="post__header">
+                    <div class="post-meta">                    
+                        <div class="post-meta__icon">
+                            <img class="profile-pic" src="${FotoProfilo}" alt="${Autore}">                    
+                        </div>
+                        <div class="post-meta__data">
+                            <div class="post-meta__author">${Autore}</div>
+                            <div class="post-meta__time">${Data}</div>
+                        </div>                    
                     </div>
-                    <div class="post-meta__data">
-                        <div class="post-meta__author">${Autore}</div>
-                        <div class="post-meta__time">${Data}</div>
-                    </div>                    
                 </div>
-            </div>
-            <div class="post__text">${TextPost}</div>
-            <div class="post__image">
-                <img src="${Image}" alt="">
-            </div>
-            <div class="post__footer">
-                <div class="likes js-likes">
-                    <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="1">
-                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                            <span class="like-button__label">Mi Piace</span>
-                        </a>
-                    </div>
-                    <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter">${Like}</b> persone
-                    </div>
-                </div> 
-            </div>            
-        </div>`
-
-// IN QUESTO MODO DICO DI INSERIRE SU HTML IL DOCUMENTO CREATO SOPRA
-    container.innerHTML = postTag;  
+                <div class="post__text">${TextPost}</div>
+                <div class="post__image">
+                    <img src="${Image}" alt="">
+                </div>
+                <div class="post__footer">
+                    <div class="likes js-likes">
+                        <div class="likes__cta">
+                            <a class="like-button  js-like-button" href="#" data-postid="${i}">
+                                <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                                <span class="like-button__label">Mi Piace</span>
+                            </a>
+                        </div>
+                        <div class="likes__counter">
+                            Piace a <b id="like-counter-${i}" class="js-likes-counter">${Like}</b> persone
+                        </div>
+                    </div> 
+                </div>            
+            </div>`
+    
+    // IN QUESTO MODO DICO DI INSERIRE SU HTML IL DOCUMENTO CREATO SOPRA
+        container.innerHTML = postTag;  
+    }
+    
 }
 
-const likeButton = document.querySelector(".js-like-button");
-let numeroLike = document.getElementById("like-counter-1");
+stampa();
+
+let buttons = document.querySelectorAll(".js-like-button");
+let numeroLike = document.querySelectorAll(".js-likes-counter");
+
+for(let i=0; i< buttons.length; i++) {
+    buttons[i].addEventListener('click', function() {
+        // post è l'array
+        const index =  this.getAttribute('data-postid');
+        post[index].Like = parseInt(post[index].Like) + 1; // va messo come intero nei dati
+        // { .. Like: "80" } => "80" + 1 => "801"
+        stampa();
+    });
+}
 
 
-likeButton.addEventListener('click',
-    
-    function(){
-       
-    }
-
-
-
-)
 
 
 
