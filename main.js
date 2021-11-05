@@ -14,6 +14,7 @@
 const container = document.getElementById("container");
 let postTag = "";
 
+// CREO L'ARRAY DI OGGETTI
 const post = [
     {
         "Autore": "Phil Mangione",
@@ -98,3 +99,21 @@ for (let i = 0; i < post.length; i++) {
 // IN QUESTO MODO DICO DI INSERIRE SU HTML IL DOCUMENTO CREATO SOPRA
     container.innerHTML = postTag;  
 }
+
+const likeButton = document.querySelector(".js-like-button");
+let numeroLike = document.getElementById("like-counter-1");
+
+
+likeButton.addEventListener('click',
+    
+    function(){
+       
+    }
+
+
+
+)
+
+
+
+
