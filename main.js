@@ -42,23 +42,6 @@ const post = [
     }
 ];
 
-    // QUI TROVO LA VECCHIA MANIERA DI RICHIAMARE GLI OGGETTI DANDO UNA VARIABILE
-        // let nameAutore = "";
-        // let photoProfile = "";
-        // let dataPost = "";
-        // let TextPost = "";
-        // let imagePost = "";
-        // let likePost = "";
-    // E ASSEGNADO ALLA VARIABILE CREATA OGNI SINGOLO OGGETTO
-        // for (let key in post){
-        //     nameAutore = post[i].Autore;
-        //     photoProfile = post[i].FotoProfilo;
-        //     dataPost = post[i].Data;
-        //     TextPost = post[i].TextPost;
-        //     imagePost = post[i].Image;
-        //     likePost = post[i].Like;
-        // }
-    
 
 function stampa() {
     postTag = "";
@@ -111,13 +94,23 @@ let buttons = document.querySelectorAll(".js-like-button");
 let numeroLike = document.querySelectorAll(".js-likes-counter");
 
 for(let i=0; i< buttons.length; i++) {
+    const baseLike = post[i].Like;
     buttons[i].addEventListener('click', function() {
-        // post è l'array
-        const index =  this.getAttribute('data-postid');
-        post[index].Like = parseInt(post[index].Like) + 1; // va messo come intero nei dati
-        // { .. Like: "80" } => "80" + 1 => "801"
-        stampa();
-    });
+        // // post è l'array
+        // const index =  this.getAttribute('data-postid');
+        // post[index].Like = parseInt(post[index].Like) + 1; // va messo come intero nei dati
+        // // { .. Like: "80" } => "80" + 1 => "801"
+        // stampa();
+    if (numeroLike[i].innerHTML === baseLike){
+        post[i].Like++
+        numeroLike[i].innerHTML++
+    } else {
+        post[i].Like--
+        numeroLike[i].innerHTML--
+    }
+    buttons[i].classList.toggle('like-button--liked');
+    }
+    );
 }
 
 
