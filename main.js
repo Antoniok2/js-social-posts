@@ -85,29 +85,30 @@ function stampa() {
     // IN QUESTO MODO DICO DI INSERIRE SU HTML IL DOCUMENTO CREATO SOPRA
         container.innerHTML = postTag;  
     }
-    
-}
+};
 
 stampa();
 
+
+// VARIABILI CHE USERò PER GESTIRE IL LIKE
 let buttons = document.querySelectorAll(".js-like-button");
 let numeroLike = document.querySelectorAll(".js-likes-counter");
 
 for(let i=0; i< buttons.length; i++) {
+
+    // AGGIUNGO UNA NUOVA VARIABILE CON NUMERO BASE DEI LIKE
     const baseLike = post[i].Like;
     buttons[i].addEventListener('click', function() {
-        // // post è l'array
-        // const index =  this.getAttribute('data-postid');
-        // post[index].Like = parseInt(post[index].Like) + 1; // va messo come intero nei dati
-        // // { .. Like: "80" } => "80" + 1 => "801"
-        // stampa();
+        // SE IL LIKE NON è ANCORA AGGIUNTO
     if (numeroLike[i].innerHTML === baseLike){
         post[i].Like++
         numeroLike[i].innerHTML++
+        // SE IL LIKE è GIà STATO AGGIUNTO
     } else {
         post[i].Like--
         numeroLike[i].innerHTML--
     }
+    // NEL FRATTEMPO INSERISCE O TOGLIE LA CLASSE AL BOTTONE LIKE
     buttons[i].classList.toggle('like-button--liked');
     }
     );
